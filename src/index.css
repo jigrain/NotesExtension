@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  width: 500px; /* your desired width */
+  height: 600px; /* your desired width */
+  position: relative;
+  vertical-align:middle;
+}
+
+.w-full.h-full {
+  min-width: 100vw; /* Ширина видимої області, включаючи зону прокрутки */
+  min-height: 100vh;
+}
+
+/* Handlers */
+.resize-handler {
+  position: absolute;
+  background-color: transparent; 
+  z-index: 10;
+}
+
+.resize-handler.bottom {
+  height: 5px;
+  width: 100%;
+  bottom: 0;
+  cursor: ns-resize;
+}
+
+.resize-handler.left {
+  width: 5px;
+  height: 100%;
+  left: 0;
+  cursor: ew-resize;
+}
+
+
+.resize-handler.top-left,
+.resize-handler.bottom-right,
+.resize-handler.top-right,
+.resize-handler.bottom-left {
+  width: 10px;
+  height: 10px;
+  background-color: transparent; 
+  z-index: 10;
+}
+
+
+.resize-handler.bottom-left {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}

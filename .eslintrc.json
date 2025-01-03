@@ -1,0 +1,16 @@
+{
+  "env": {
+    "browser": true,
+    "webextensions": true,
+    "es6": true
+  },
+  "globals": {
+    "chrome": "readonly"
+  },
+  "rules": {
+    "no-undef": "error"
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
+}

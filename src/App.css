@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Style the toolbar container */
+.toolbar-container .ql-toolbar {
+  display: none; /* Hide toolbar by default */
+  transition: opacity 0.3s ease;
+}
+
+.toolbar-container.visible .ql-toolbar {
+  display: block; /* Show toolbar when text is selected */
+  opacity: 1;
+}
+
+.toolbar-container.visible .ql-container {
+  height: 90%; /* Зменшуємо висоту, коли toolbar видимий */
+}
+
+.toolbar-container .ql-container {
+  height: 100%; /* Повна висота, коли toolbar прихований */
+}
+
+.ql-toolbar {
+  background-color: #f4f4f4; /* Light grey background */
+  padding: 5px;
+}
+
+.ql-container {
+  padding: 10px;
+  flex-grow: 1; /* Забезпечує розтягування на всю висоту */
+  overflow-y: auto; /* Додає прокрутку тільки при переповненні */
+  height: 100%; /* Використовує всю висоту контейнера */
+}
+
+.ql-editor {
+  padding-bottom: 10px; /* Простір для останнього рядка */
+  box-sizing: border-box; /* Коректна модель розмірів */
+}
+

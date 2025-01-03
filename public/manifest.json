@@ -1,0 +1,11 @@
+{
+  "manifest_version": 2,
+  "name": "React Popup Extension",
+  "version": "1.0",
+  "description": "React application as a browser extension",
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Open React Popup"
+  },
+  "permissions": ["storage"]
+}
