@@ -108,7 +108,8 @@ const handleContentChange = (newContent) => {
             toolbar: [
               ["bold", "italic", "underline", "strike"], // Basic formatting
               [{ list: "ordered" }, { list: "bullet" }], // Lists
-              ["color", "background"],
+              [{ color: [] }, { background: [] }],       // Dropdowns for color and background color
+              ["clean"]
             ],
           }}
           placeholder="Write something amazing..."
