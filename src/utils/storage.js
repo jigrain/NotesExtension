@@ -12,6 +12,7 @@ const isFirefox = getBrowserName() === 'Firefox';
 
 // Універсальна функція для збереження даних
 export const saveDataToStorage = (key, data) => {
+  console.log("Browser type: "+ getBrowserName())
   return new Promise((resolve, reject) => {
     if (isFirefox) {
       // Для Firefox
@@ -34,6 +35,7 @@ export const saveDataToStorage = (key, data) => {
 
 // Універсальна функція для завантаження даних
 export const loadDataFromStorage = (key) => {
+  console.log("Browser type: "+ getBrowserName())
   return new Promise((resolve, reject) => {
     if (isFirefox) {
       // Для Firefox

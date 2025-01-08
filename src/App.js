@@ -35,10 +35,10 @@ export default function App() {
             let newHeight = startHeight;
 
             if (direction.includes("right")) {
-                newWidth = Math.min(800, Math.max(300, startWidth + (event.clientX - startX)));
+                newWidth = Math.min(800, Math.max(350, startWidth + (event.clientX - startX)));
             }
             if (direction.includes("left")) {
-                newWidth = Math.min(800, Math.max(300, startWidth - (event.clientX - startX)));
+                newWidth = Math.min(800, Math.max(350, startWidth - (event.clientX - startX)));
             }
             if (direction.includes("bottom")) {
                 newHeight = Math.min(600, Math.max(300, startHeight + (event.clientY - startY)));

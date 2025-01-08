@@ -3,7 +3,7 @@ import React from 'react';
 export default function Button({ children, className = '', ...props }) {
   return (
     <button
-      className={`p-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${className}`}
+      className={`p-1 sm:p-2 rounded-md transition-colors duration-200 ${className}`}
       {...props}
     >
       {React.Children.map(children, child =>

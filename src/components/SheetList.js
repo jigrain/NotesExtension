@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import Button from './Button';
 import TagManagerModal from './TagManagerModal';
 import ContextMenu from './ContextMenu';
+import TagFilterModal from './TagFilterModal';
 
 export default function SheetList({ sheets, addNewSheet, selectSheet, searchTerm, setSearchTerm, sortBy, setSortBy, allTags, updateTags, deleteSheet, downloadSheet, exportAllSheets,
   importSheets, fileInputRef, handleFileUpload }) {
@@ -11,9 +12,17 @@ export default function SheetList({ sheets, addNewSheet, selectSheet, searchTerm
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [contextMenu, setContextMenu] = useState(null);
   const [isNewSheetDropdownOpen, setIsNewSheetDropdownOpen] = useState(false);
+  const [isTagFilterModalOpen, setIsTagFilterModalOpen] = useState(false);
+  const [filteredTags, setFilteredTags] = useState([]);
 
   const dropdownRef = useRef(null);
   const newSheetDropdownRef = useRef(null);
+
+  const filteredSheets = sheets.filter(sheet =>
+    (!filteredTags.length || sheet.tags.some(tag => filteredTags.includes(tag))) &&
+    (sheet.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+     sheet.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())))
+  );
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
@@ -124,13 +133,32 @@ export default function SheetList({ sheets, addNewSheet, selectSheet, searchTerm
                 >
                   Sort by Name
                 </button>
+                <button
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  onClick={() => {
+                    setIsTagFilterModalOpen(true);
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  Filter by Tags
+                </button>
+                <button
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                  onClick={() => {
+                    setFilteredTags([]);
+                    setSearchTerm('');
+                    setIsDropdownOpen(false);
+                  }}
+                >
+                  Clear All Filters
+                </button>
               </div>
             </div>
           )}
         </div>
       </div>
       <div className="overflow-y-auto flex-grow">
-        {sheets.map(sheet => (
+        {filteredSheets.map(sheet => (
           <div
             key={sheet.id}
             className="border cursor-pointer hover:bg-gray-100 rounded-lg p-4 shadow-sm"
@@ -182,6 +210,14 @@ export default function SheetList({ sheets, addNewSheet, selectSheet, searchTerm
             { label: 'Download', action: () => downloadSheet(contextMenu.sheet) },
             { label: 'Delete', action: () => deleteSheet(contextMenu.sheet.id) }
           ]}
+        />
+      )}
+      {isTagFilterModalOpen && (
+        <TagFilterModal
+          tags={allTags}
+          selectedTags={filteredTags}
+          onClose={() => setIsTagFilterModalOpen(false)}
+          onApply={(selected) => setFilteredTags(selected)}
         />
       )}
     </div>
