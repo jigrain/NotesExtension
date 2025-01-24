@@ -4,7 +4,6 @@ import Button from './Button';
 import TagSelectorModal from './TagSelectorModal';
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import CustomClipboard from 'react-quill-scroll-fix'
 
 export default function SheetEditor({ sheet, updateSheet, closeEditor, allTags }) {
   const [name, setName] = useState(sheet.name);
@@ -13,6 +12,8 @@ export default function SheetEditor({ sheet, updateSheet, closeEditor, allTags }
   const nameRef = useRef(null);
   const [isTextSelected, setIsTextSelected] = useState(false);
   const [content, setContent] = useState(sheet.content);
+
+  const [initialContainerHeight, setInitialContainerHeight] = useState(null);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -27,6 +28,7 @@ export default function SheetEditor({ sheet, updateSheet, closeEditor, allTags }
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [nameRef, updateSheet, sheet, name]);
+
 
   const handleNameClick = () => {
     setIsEditing(true);
@@ -54,11 +56,28 @@ export default function SheetEditor({ sheet, updateSheet, closeEditor, allTags }
   };
 
   const handleSelectionChange = (range) => {
-    // Show the toolbar only when text is selected
+    const element = document.getElementById('input-text-container');
+    const container = document.querySelector('.ql-container');
+  
     if (range && range.length > 0) {
       setIsTextSelected(true);
+  
+      const elementHeight = element.offsetHeight;
+      const toolbarHeight = 43; // Висота тулбара (статична або динамічна)
+      const containerHeight = container.offsetHeight;
+      setInitialContainerHeight(container.offsetHeight);
+  
+      const totalHeight = containerHeight + toolbarHeight;
+  
+      if (totalHeight > elementHeight) {
+        const difference = totalHeight - elementHeight;
+        const newContainerHeight = containerHeight - difference;
+        container.style.height = `${newContainerHeight}px`;
+      }
     } else {
       setIsTextSelected(false);
+      // Відновлюємо початкову висоту при знятті виділення
+      container.style.removeProperty('height');
     }
   };
 
@@ -96,7 +115,7 @@ const handleContentChange = (newContent) => {
           <Tag className="h-5 w-5 text-black" />
         </Button>
       </div>
-      <div className={`toolbar-container flex flex-col flex-grow overflow-hidden ${isTextSelected ? "visible" : ""}`}>
+      <div id="input-text-container" className={`toolbar-container flex flex-col flex-grow overflow-hidden ${isTextSelected ? "visible" : ""}`}>
         <ReactQuill
           theme="snow"
           value={content}

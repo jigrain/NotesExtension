@@ -24,7 +24,7 @@
 
 .ql-toolbar {
   background-color: #f4f4f4; /* Light grey background */
-  padding: 5px;
+  height: 43px !important; 
 }
 
 .ql-container {
