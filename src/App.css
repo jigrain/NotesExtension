@@ -27,6 +27,10 @@
   height: 43px !important; 
 }
 
+.toolbar-container.visible .ql-container {
+  height: calc(100% - 43px); /* Висота контейнера мінус висота тулбара */
+}
+
 .ql-container {
   padding: 10px;
   flex-grow: 1; /* Забезпечує розтягування на всю висоту */
